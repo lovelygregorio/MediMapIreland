@@ -1,15 +1,15 @@
-
 package com.example.medimapireland.activities
 
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.medimapireland.R
 import com.example.medimapireland.databinding.ActivityHealthcareFacilityBinding
 import com.example.medimapireland.main.MainApp
 import com.example.medimapireland.models.HealthcareFacilityModel
 
-
-// Screen for adding a new healthcare facility
+// Screen for adding or editing a healthcare facility
 class HealthcareFacilityActivity : AppCompatActivity() {
 
     // View Binding connects Kotlin to the XML layout
@@ -32,9 +32,11 @@ class HealthcareFacilityActivity : AppCompatActivity() {
         // Get the application and its facility storage
         app = application as MainApp
 
+        // Initialise the dropdown menus
+        setupDropdownMenus()
+
         // Check whether a facility ID was passed for editing
         if (intent.hasExtra("facility_id")) {
-
             val facilityId = intent.getLongExtra("facility_id", -1L)
 
             // Find the existing facility using its ID
@@ -46,19 +48,22 @@ class HealthcareFacilityActivity : AppCompatActivity() {
             val facility = editingFacility
 
             if (facility != null) {
-
                 binding.facilityName.setText(facility.name)
                 binding.facilityDescription.setText(facility.description)
-                binding.facilityCounty.setText(facility.county)
-                binding.facilityType.setText(facility.facilityType)
-                binding.facilityOwnership.setText(facility.ownership)
+
+                // Restore saved selections without filtering dropdown options
+                binding.facilityCounty.setText(facility.county, false)
+                binding.facilityType.setText(facility.facilityType, false)
+                binding.facilityOwnership.setText(facility.ownership, false)
+
                 binding.facilityServices.setText(facility.services)
+
+                // Change the screen heading when editing
+                binding.tvFormHeading.text = "Edit Healthcare Facility"
 
                 // Change the button text when editing
                 binding.btnSaveFacility.text = "Update Facility"
-
             } else {
-
                 // Close the screen if the facility cannot be found
                 Toast.makeText(
                     this,
@@ -74,7 +79,7 @@ class HealthcareFacilityActivity : AppCompatActivity() {
         // Listen for the Save or Update button being clicked
         binding.btnSaveFacility.setOnClickListener {
 
-            // Read the values entered by the user
+            // Read the values entered or selected by the user
             val name = binding.facilityName.text.toString().trim()
             val description = binding.facilityDescription.text.toString().trim()
             val county = binding.facilityCounty.text.toString().trim()
@@ -84,20 +89,17 @@ class HealthcareFacilityActivity : AppCompatActivity() {
 
             // Validate the required fields
             if (name.isBlank() || county.isBlank() ||
-                facilityType.isBlank() || ownership.isBlank()) {
-
+                facilityType.isBlank() || ownership.isBlank()
+            ) {
                 Toast.makeText(
                     this,
                     "Please complete all required fields",
                     Toast.LENGTH_SHORT
                 ).show()
-
             } else {
-
                 val existingFacility = editingFacility
 
                 if (existingFacility != null) {
-
                     // Update the existing facility while preserving
                     // its ID, latitude, longitude and zoom
                     val updatedFacility = existingFacility.copy(
@@ -109,7 +111,7 @@ class HealthcareFacilityActivity : AppCompatActivity() {
                         services = services
                     )
 
-                    // Update the facility in shared storage
+                    // Update the facility in shared JSON storage
                     app.facilities.update(updatedFacility)
 
                     // Display update confirmation
@@ -118,9 +120,7 @@ class HealthcareFacilityActivity : AppCompatActivity() {
                         "Healthcare facility updated!",
                         Toast.LENGTH_SHORT
                     ).show()
-
                 } else {
-
                     // Create a new healthcare facility object
                     val facility = HealthcareFacilityModel(
                         name = name,
@@ -131,7 +131,7 @@ class HealthcareFacilityActivity : AppCompatActivity() {
                         services = services
                     )
 
-                    // Save the facility to temporary memory storage
+                    // Save the facility to persistent JSON storage
                     app.facilities.create(facility)
 
                     // Display save confirmation
@@ -146,5 +146,48 @@ class HealthcareFacilityActivity : AppCompatActivity() {
                 finish()
             }
         }
+    }
+
+    // Configure the dropdown menus using string arrays
+    private fun setupDropdownMenus() {
+
+        // Load all 32 Irish counties from strings.xml
+        val counties = resources.getStringArray(R.array.irish_counties)
+
+        // Create an adapter to display the county options
+        val countyAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_dropdown_item_1line,
+            counties
+        )
+
+        // Connect the adapter to the county dropdown
+        binding.facilityCounty.setAdapter(countyAdapter)
+
+        // Load the available healthcare facility types
+        val facilityTypes = resources.getStringArray(R.array.facility_types)
+
+        // Create an adapter to display the facility type options
+        val typeAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_dropdown_item_1line,
+            facilityTypes
+        )
+
+        // Connect the adapter to the facility type dropdown
+        binding.facilityType.setAdapter(typeAdapter)
+
+        // Load the available ownership categories
+        val ownershipTypes = resources.getStringArray(R.array.ownership_types)
+
+        // Create an adapter to display the ownership options
+        val ownershipAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_dropdown_item_1line,
+            ownershipTypes
+        )
+
+        // Connect the adapter to the ownership dropdown
+        binding.facilityOwnership.setAdapter(ownershipAdapter)
     }
 }

@@ -16,6 +16,7 @@
 
         <!-- Screen heading -->
         <TextView
+            android:id="@+id/tvFormHeading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Add Healthcare Facility"
@@ -52,45 +53,51 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- County -->
+        <!-- County dropdown menu -->
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             android:hint="County">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/facilityCounty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapWords" />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Facility type -->
+        <!-- Facility type dropdown menu -->
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Facility Type (Hospital, Clinic, GP)">
+            android:layout_marginBottom="12dp"
+            android:hint="Facility Type">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/facilityType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapWords" />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Ownership -->
+        <!-- Ownership dropdown menu -->
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ownership (Public or Private)">
+            android:layout_marginBottom="12dp"
+            android:hint="Ownership">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/facilityOwnership"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapWords" />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
