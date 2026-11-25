@@ -9,17 +9,17 @@ import com.example.medimapireland.adapters.HealthcareFacilityListener
 import com.example.medimapireland.databinding.ActivityHealthcareFacilityListBinding
 import com.example.medimapireland.main.MainApp
 import com.example.medimapireland.models.HealthcareFacilityModel
+import android.content.Intent
 
 // Screen for displaying a list of healthcare facilities
 class HealthcareFacilityListActivity : AppCompatActivity(),
     HealthcareFacilityListener {
-    // View Binding connects Kotlin to the XML layout
 
+    // View Binding connects Kotlin to the XML layout
     private lateinit var binding: ActivityHealthcareFacilityListBinding
 
     // Access the shared application storage
     private lateinit var app: MainApp
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +43,9 @@ class HealthcareFacilityListActivity : AppCompatActivity(),
         loadFacilities()
     }
 
-    // Retrieve the latest facilities whenever this screen opens
+    // Retrieve the latest healthcare facilities
     private fun loadFacilities() {
+
         val facilities = app.facilities.findAll()
 
         // Connect the saved facilities to the RecyclerView
@@ -62,6 +63,7 @@ class HealthcareFacilityListActivity : AppCompatActivity(),
         AlertDialog.Builder(this)
             .setTitle(facility.name)
             .setItems(options) { _, which ->
+
                 when (which) {
                     0 -> editFacility(facility)
                     1 -> deleteFacility(facility)
@@ -71,8 +73,17 @@ class HealthcareFacilityListActivity : AppCompatActivity(),
             .show()
     }
 
+    // Open the selected healthcare facility for editing
     private fun editFacility(facility: HealthcareFacilityModel) {
 
+        // Create an Intent to open the healthcare facility form
+        val intent = Intent(this, HealthcareFacilityActivity::class.java)
+
+        // Pass the ID of the selected facility to the activity
+        intent.putExtra("facility_id", facility.id)
+
+        // Open the healthcare facility activity
+        startActivity(intent)
     }
 
     // Confirm and delete the selected healthcare facility
@@ -97,5 +108,4 @@ class HealthcareFacilityListActivity : AppCompatActivity(),
             .setNegativeButton("Cancel", null)
             .show()
     }
-
 }
