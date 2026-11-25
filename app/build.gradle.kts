@@ -42,6 +42,8 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
     implementation(libs.material)
+    // Gson library for converting Kotlin objects to and from JSON
+    implementation("com.google.code.gson:gson:2.11.0")
 
     // RecyclerView displays healthcare facilities in a scrollable list
     implementation("androidx.recyclerview:recyclerview:1.4.0")

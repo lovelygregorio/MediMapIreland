@@ -2,7 +2,7 @@
 package com.example.medimapireland.main
 
 import android.app.Application
-import com.example.medimapireland.models.HealthcareFacilityMemStore
+import com.example.medimapireland.models.HealthcareFacilityJSONStore
 import com.example.medimapireland.models.HealthcareFacilityStore
 
 // Main application class for MediMap Ireland
@@ -14,7 +14,7 @@ class MainApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        // Initialise temporary memory storage
-        facilities = HealthcareFacilityMemStore()
+        // Initialise persistent JSON storage
+        facilities = HealthcareFacilityJSONStore(this)
     }
 }
