@@ -6,9 +6,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.medimapireland.databinding.ItemHealthcareFacilityBinding
 import com.example.medimapireland.models.HealthcareFacilityModel
 
+
+// Interface for handling healthcare facility clicks
+interface HealthcareFacilityListener {
+    fun onFacilityClick(facility: HealthcareFacilityModel)
+}
+
 // Adapter connects our healthcare facility data to the RecyclerView
 class HealthcareFacilityAdapter(
-    private val facilities: List<HealthcareFacilityModel>
+    private val facilities: List<HealthcareFacilityModel>,
+    private val listener: HealthcareFacilityListener
 ) : RecyclerView.Adapter<HealthcareFacilityAdapter.FacilityViewHolder>() {
 
     // ViewHolder holds the views for one healthcare facility item
@@ -44,6 +51,11 @@ class HealthcareFacilityAdapter(
         holder.binding.tvFacilityCounty.text = "County: ${facility.county}"
         holder.binding.tvFacilityType.text = "Type: ${facility.facilityType}"
         holder.binding.tvFacilityOwnership.text = "Ownership: ${facility.ownership}"
+
+        // Detects when the user selects a facility
+        holder.binding.root.setOnClickListener {
+            listener.onFacilityClick(facility)
+        }
     }
 
     // Tell RecyclerView how many facilities to display
