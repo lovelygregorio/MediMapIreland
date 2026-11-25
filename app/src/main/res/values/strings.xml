@@ -1,3 +1,61 @@
 <resources>
     <string name="app_name">MediMapIreland</string>
+
+    <!-- List of all 32 Irish counties -->
+    <string-array name="irish_counties">
+        <item>Antrim</item>
+        <item>Armagh</item>
+        <item>Carlow</item>
+        <item>Cavan</item>
+        <item>Clare</item>
+        <item>Cork</item>
+        <item>Derry</item>
+        <item>Donegal</item>
+        <item>Down</item>
+        <item>Dublin</item>
+        <item>Fermanagh</item>
+        <item>Galway</item>
+        <item>Kerry</item>
+        <item>Kildare</item>
+        <item>Kilkenny</item>
+        <item>Laois</item>
+        <item>Leitrim</item>
+        <item>Limerick</item>
+        <item>Longford</item>
+        <item>Louth</item>
+        <item>Mayo</item>
+        <item>Meath</item>
+        <item>Monaghan</item>
+        <item>Offaly</item>
+        <item>Roscommon</item>
+        <item>Sligo</item>
+        <item>Tipperary</item>
+        <item>Tyrone</item>
+        <item>Waterford</item>
+        <item>Westmeath</item>
+        <item>Wexford</item>
+        <item>Wicklow</item>
+    </string-array>
+
+    <!-- Available healthcare facility types -->
+    <string-array name="facility_types">
+        <item>Hospital</item>
+        <item>GP Clinic</item>
+        <item>Pharmacy</item>
+        <item>Dental Clinic</item>
+        <item>Primary Care Centre</item>
+        <item>Urgent Care Centre</item>
+        <item>Diagnostic Centre</item>
+        <item>Rehabilitation Centre</item>
+        <item>Nursing Home</item>
+        <item>Other</item>
+    </string-array>
+
+    <!-- Healthcare facility ownership categories -->
+    <string-array name="ownership_types">
+        <item>Public</item>
+        <item>Private</item>
+        <item>Voluntary</item>
+    </string-array>
+
 </resources>
