@@ -14,7 +14,7 @@ interface HealthcareFacilityListener {
 
 // Adapter connects our healthcare facility data to the RecyclerView
 class HealthcareFacilityAdapter(
-    private val facilities: List<HealthcareFacilityModel>
+    private val facilities: List<HealthcareFacilityModel>,
     private val listener: HealthcareFacilityListener
 ) : RecyclerView.Adapter<HealthcareFacilityAdapter.FacilityViewHolder>() {
 
