@@ -42,6 +42,12 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
     implementation(libs.material)
+
+    // RecyclerView displays healthcare facilities in a scrollable list
+    implementation("androidx.recyclerview:recyclerview:1.4.0")
+
+
+    //dependecies for testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)

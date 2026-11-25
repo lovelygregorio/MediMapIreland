@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Application configuration and registration of MainApp
+         for shared healthcare facility storage -->
+
     <application
         android:name=".main.MainApp"
         android:allowBackup="true"
@@ -12,20 +15,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MediMapIreland">
+
+        <!-- Main activity displays the home screen of MediMap Ireland -->
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
+
+
+            <!-- Defines MainActivity as the starting screen
+                when the application is launched -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Activity for adding a new healthcare facility -->
         <activity
             android:name=".activities.HealthcareFacilityActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+
+
+        <!-- Activity for displaying saved healthcare facilities
+             in a scrollable RecyclerView list -->
+        <activity
+            android:name=".activities.HealthcareFacilityListActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

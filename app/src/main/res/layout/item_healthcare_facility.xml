@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:layout_marginBottom="8dp"
+    android:background="?attr/selectableItemBackground">
+
+    <!-- Name of the hospital, clinic or healthcare facility -->
+    <TextView
+        android:id="@+id/tvFacilityName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Facility Name"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <!-- County where the healthcare facility is located -->
+    <TextView
+        android:id="@+id/tvFacilityCounty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="County"
+        android:layout_marginTop="4dp" />
+
+    <!-- Type of facility, such as Hospital, Clinic or GP -->
+    <TextView
+        android:id="@+id/tvFacilityType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Facility Type"
+        android:layout_marginTop="4dp" />
+
+    <!-- Whether the facility is publicly or privately owned -->
+    <TextView
+        android:id="@+id/tvFacilityOwnership"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ownership"
+        android:layout_marginTop="4dp" />
+
+</LinearLayout>
