@@ -1,8 +1,10 @@
 package com.example.medimapireland.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.medimapireland.R
 import com.example.medimapireland.databinding.ActivityHealthcareFacilityBinding
@@ -21,6 +23,36 @@ class HealthcareFacilityActivity : AppCompatActivity() {
     // Holds the existing facility when editing
     // Null means we are adding a new facility
     private var editingFacility: HealthcareFacilityModel? = null
+
+    // Default map coordinates for Dublin, Ireland
+    private var latitude = 53.3498
+    private var longitude = -6.2603
+    private var zoom = 12f
+
+    // Tracks whether the user has selected a location
+    private var locationSelected = false
+
+    // Receive the selected location returned by MapActivity
+    private val mapLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val data = result.data
+
+            if (data != null) {
+                // Retrieve the selected coordinates and zoom level
+                latitude = data.getDoubleExtra("latitude", latitude)
+                longitude = data.getDoubleExtra("longitude", longitude)
+                zoom = data.getFloatExtra("zoom", zoom)
+
+                // Mark the location as selected
+                locationSelected = true
+
+                // Display the selected location on the form
+                displaySelectedLocation()
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +90,16 @@ class HealthcareFacilityActivity : AppCompatActivity() {
 
                 binding.facilityServices.setText(facility.services)
 
+                // Retrieve the previously saved map coordinates
+                latitude = facility.lat
+                longitude = facility.lng
+                zoom = facility.zoom
+
+                // Older facilities may still contain the default coordinates
+                locationSelected = latitude != 53.3498 ||
+                        longitude != -6.2603
+
+
                 // Change the screen heading when editing
                 binding.tvFormHeading.text = "Edit Healthcare Facility"
 
@@ -74,6 +116,34 @@ class HealthcareFacilityActivity : AppCompatActivity() {
                 finish()
                 return
             }
+        }
+
+
+        // Restore the selected location after activity recreation
+        if (savedInstanceState != null) {
+            latitude = savedInstanceState.getDouble("latitude", latitude)
+            longitude = savedInstanceState.getDouble("longitude", longitude)
+            zoom = savedInstanceState.getFloat("zoom", zoom)
+            locationSelected = savedInstanceState.getBoolean(
+                "locationSelected",
+                locationSelected
+            )
+        }
+
+        // Display the current location selection
+        displaySelectedLocation()
+
+        // Open Google Maps when the Set Location button is clicked
+        binding.btnSetLocation.setOnClickListener {
+            val mapIntent = Intent(this, MapActivity::class.java)
+
+            // Pass the current coordinates to the map screen
+            mapIntent.putExtra("latitude", latitude)
+            mapIntent.putExtra("longitude", longitude)
+            mapIntent.putExtra("zoom", zoom)
+
+            // Launch the map and wait for the selected location
+            mapLauncher.launch(mapIntent)
         }
 
         // Listen for the Save or Update button being clicked
@@ -128,7 +198,10 @@ class HealthcareFacilityActivity : AppCompatActivity() {
                         county = county,
                         facilityType = facilityType,
                         ownership = ownership,
-                        services = services
+                        services = services,
+                        lat = latitude,
+                        lng = longitude,
+                        zoom = zoom
                     )
 
                     // Save the facility to persistent JSON storage
@@ -145,6 +218,30 @@ class HealthcareFacilityActivity : AppCompatActivity() {
                 // Close this screen and return to the previous one
                 finish()
             }
+        }
+    }
+
+    // Preserve selected coordinates when the activity is recreated
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putDouble("latitude", latitude)
+        outState.putDouble("longitude", longitude)
+        outState.putFloat("zoom", zoom)
+        outState.putBoolean("locationSelected", locationSelected)
+
+        super.onSaveInstanceState(outState)
+    }
+
+    // Display the selected map coordinates on the form
+    private fun displaySelectedLocation() {
+        if (locationSelected) {
+            binding.tvSelectedLocation.text =
+                "Location selected\nLatitude: %.5f\nLongitude: %.5f"
+                    .format(latitude, longitude)
+
+            binding.btnSetLocation.text = "Change Location"
+        } else {
+            binding.tvSelectedLocation.text = "No location selected"
+            binding.btnSetLocation.text = "Set Location"
         }
     }
 

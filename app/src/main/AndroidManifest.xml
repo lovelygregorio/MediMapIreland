@@ -2,6 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Allow the application to access Google Maps online -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Allow the application to access the user's precise location -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- Allow the application to access the user's approximate location -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+
     <!-- Application configuration and registration of MainApp
          for shared healthcare facility storage -->
 
@@ -15,6 +25,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MediMapIreland">
+
+        <!-- Google Maps API key configuration -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
+
 
         <!-- Main activity displays the home screen of MediMap Ireland -->
 

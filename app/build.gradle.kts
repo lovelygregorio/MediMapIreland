@@ -1,5 +1,18 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
+}
+
+// Load local properties containing the Google Maps API key
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+
+// Read the local properties file if it exists
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.inputStream().use {
+        localProperties.load(it)
+    }
 }
 
 android {
@@ -16,8 +29,14 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
 
+
+        // Pass the Google Maps API key to AndroidManifest.xml
+        manifestPlaceholders["MAPS_API_KEY"] =
+            localProperties.getProperty("MAPS_API_KEY", "")
+
+
+    }
     buildTypes {
         release {
             optimization {
@@ -48,6 +67,11 @@ dependencies {
     // RecyclerView displays healthcare facilities in a scrollable list
     implementation("androidx.recyclerview:recyclerview:1.4.0")
 
+    // Google Maps SDK for displaying healthcare facility locations
+    implementation("com.google.android.gms:play-services-maps:19.2.0")
+
+    // Google Location Services for accessing the user's current location
+    implementation("com.google.android.gms:play-services-location:21.3.0")
 
     //dependecies for testing
     testImplementation(libs.junit)

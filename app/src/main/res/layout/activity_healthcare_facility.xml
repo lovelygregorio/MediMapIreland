@@ -116,6 +116,24 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!-- Display the selected healthcare facility location -->
+        <TextView
+            android:id="@+id/tvSelectedLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="No location selected"
+            android:textSize="14sp" />
+
+        <!-- Open Google Maps to select a facility location -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSetLocation"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Set Location" />
+
         <!-- Save button -->
         <Button
             android:id="@+id/btnSaveFacility"
